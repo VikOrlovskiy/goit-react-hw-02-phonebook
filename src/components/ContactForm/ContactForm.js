@@ -7,18 +7,19 @@ console.log(model);
 
 export default class ContactForm extends Component {
   state = {
-    contacts: [],
     name: '',
+    number: '',
   };
-  // onClickIncrementValue = e => {
-  //   const activeBtnValue = e.target.textContent;
-  //   this.setState(prevState => ({
-  //     [activeBtnValue]: prevState[activeBtnValue] + 1,
-  //   }));
-  // };
+  handleSubmit = evt => {
+    evt.preventDefault();
+    const form = evt.currentTarget;
+    const name = form.elements.name.value;
+    const number = form.elements.number.value;
+    console.log(name, number);
+  };
   render() {
     return (
-      <form className={s.form}>
+      <form className={s.form} onSubmit={this.handleSubmit}>
         <label className={s.title}>
           name
           <input
@@ -41,7 +42,9 @@ export default class ContactForm extends Component {
             required
           />
         </label>
-        <button className={s.button}>add to contact</button>
+        <button className={s.button} type="submit">
+          add to contact
+        </button>
       </form>
     );
   }

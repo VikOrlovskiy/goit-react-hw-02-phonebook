@@ -17,6 +17,22 @@ export default class Main extends Component {
     name: '',
     number: '',
   };
+  deleteContact = contactId => {
+    this.setState(prewState => ({
+      contacts: prewState.contacts.filter(contact => contact.id !== contactId),
+    }));
+  };
+  addContact = contact => {
+    this.setState(prewState => ({
+      contacts: prewState.contacts.reduce(
+        (contact,
+        acc => {
+          console.log(contact);
+          console.log(acc);
+        }),
+      ),
+    }));
+  };
   // onClickIncrementValue = e => {
   //   const activeBtnValue = e.target.textContent;
   //   this.setState(prevState => ({
@@ -27,10 +43,13 @@ export default class Main extends Component {
     return (
       <div className={s.wraper}>
         <h1>Phonebook</h1>
-        <ContactForm />
+        <ContactForm addContact={this.addContact} />
         <h2>Contacts</h2>
         <Filter />
-        <ContactList contacts={this.state.contacts} />
+        <ContactList
+          contacts={this.state.contacts}
+          deleteContact={this.deleteContact}
+        />
       </div>
     );
   }

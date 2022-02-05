@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-import Section from '../Section';
-import RegistrationForm from '../RegistrationForm';
-import FindForm from '../FindForm';
+import ContactForm from '../ContactForm';
+import Filter from '../Filter';
 import ContactList from '../ContactList';
+import s from './Main.module.css';
 
 export default class Main extends Component {
   state = {
@@ -25,17 +25,13 @@ export default class Main extends Component {
   // };
   render() {
     return (
-      <>
-        <Section title={'Phonebook'}>
-          <RegistrationForm />
-        </Section>
-        <Section title={'Contacts'}>
-          <FindForm />
-        </Section>
-        <Section title={'data'}>
-          <ContactList contacts={this.state.contacts} />
-        </Section>
-      </>
+      <div className={s.wraper}>
+        <h1>Phonebook</h1>
+        <ContactForm />
+        <h2>Contacts</h2>
+        <Filter />
+        <ContactList contacts={this.state.contacts} />
+      </div>
     );
   }
 }

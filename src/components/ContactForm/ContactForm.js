@@ -10,9 +10,7 @@ export default class ContactForm extends Component {
   };
   onChengeValue = e => {
     const { name, value } = e.currentTarget;
-    this.setState({
-      [name]: value,
-    });
+    this.setState({ [name]: value });
   };
   handleSubmit = evt => {
     evt.preventDefault();
@@ -21,10 +19,7 @@ export default class ContactForm extends Component {
     this.resetForm();
   };
   resetForm() {
-    this.setState({
-      name: '',
-      number: '',
-    });
+    this.setState({ name: '', number: '' });
   }
   render() {
     const { name, number } = this.state;

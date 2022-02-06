@@ -21,28 +21,41 @@ export default class Main extends Component {
     }));
   };
   addContact = newContact => {
+    const nameInList = this.state.contacts.filter(({ name }) => {
+      return name === newContact.name;
+    });
+    if (nameInList.length) {
+      window.alert(`${nameInList[0].name} is alredy in contact`);
+      return;
+    }
     this.setState(({ contacts }) => ({
       contacts: [newContact, ...contacts],
     }));
   };
-  findContact(value) {
-    console.log(value);
-    console.log(this.setState({ filter: value }));
-  }
   onChengeValue = e => {
     const { name, value } = e.currentTarget;
     this.setState({ [name]: value });
   };
-  render() {
+  filtredLIst = () => {
     const { contacts, filter } = this.state;
-    console.log(this.state.filter);
+    const normalizeFilter = filter.toLocaleLowerCase();
+    return contacts.filter(({ name }) => {
+      return name.toLocaleLowerCase().includes(normalizeFilter);
+    });
+  };
+  render() {
+    const filtredLIst = this.filtredLIst();
+    const { filter } = this.state;
     return (
       <div className={s.wraper}>
-        <h1>Phonebook</h1>
+        <h1 className={s.title}>Phonebook</h1>
         <ContactForm onSubmit={this.addContact} />
-        <h2>Contacts</h2>
+        <h2 className={s.subtitle}>Contacts</h2>
         <Filter value={filter} onChengeValue={this.onChengeValue} />
-        <ContactList contacts={contacts} deleteContact={this.deleteContact} />
+        <ContactList
+          contacts={filtredLIst}
+          deleteContact={this.deleteContact}
+        />
       </div>
     );
   }

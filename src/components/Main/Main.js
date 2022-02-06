@@ -14,42 +14,35 @@ export default class Main extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    name: '',
-    number: '',
   };
   deleteContact = contactId => {
-    this.setState(prewState => ({
-      contacts: prewState.contacts.filter(contact => contact.id !== contactId),
+    this.setState(({ contacts }) => ({
+      contacts: contacts.filter(contact => contact.id !== contactId),
     }));
   };
-  addContact = contact => {
-    this.setState(prewState => ({
-      contacts: prewState.contacts.reduce(
-        (contact,
-        acc => {
-          console.log(contact);
-          console.log(acc);
-        }),
-      ),
+  addContact = newContact => {
+    this.setState(({ contacts }) => ({
+      contacts: [newContact, ...contacts],
     }));
   };
-  // onClickIncrementValue = e => {
-  //   const activeBtnValue = e.target.textContent;
-  //   this.setState(prevState => ({
-  //     [activeBtnValue]: prevState[activeBtnValue] + 1,
-  //   }));
-  // };
+  findContact(value) {
+    console.log(value);
+    console.log(this.setState({ filter: value }));
+  }
+  onChengeValue = e => {
+    const { name, value } = e.currentTarget;
+    this.setState({ [name]: value });
+  };
   render() {
+    const { contacts, filter } = this.state;
+    console.log(this.state.filter);
     return (
       <div className={s.wraper}>
         <h1>Phonebook</h1>
-        <ContactForm addContact={this.addContact} />
+        <ContactForm onSubmit={this.addContact} />
         <h2>Contacts</h2>
-        <Filter />
-        <ContactList
-          contacts={this.state.contacts}
-          deleteContact={this.deleteContact}
-        />
+        <Filter value={filter} onChengeValue={this.onChengeValue} />
+        <ContactList contacts={contacts} deleteContact={this.deleteContact} />
       </div>
     );
   }

@@ -2,22 +2,32 @@
 import React, { Component } from 'react';
 import s from './ContactForm.module.css';
 import { nanoid } from 'nanoid';
-let model = nanoid(); //=> "V1StGXR8_Z5jdHi6B-myT"
-console.log(model);
 
 export default class ContactForm extends Component {
   state = {
     name: '',
     number: '',
   };
+  onChengeValue = e => {
+    const { name, value } = e.currentTarget;
+    this.setState({
+      [name]: value,
+    });
+  };
   handleSubmit = evt => {
     evt.preventDefault();
-    const form = evt.currentTarget;
-    const name = form.elements.name.value;
-    const number = form.elements.number.value;
-    console.log(name, number);
+    const id = nanoid();
+    this.props.onSubmit({ id, ...this.state });
+    this.resetForm();
   };
+  resetForm() {
+    this.setState({
+      name: '',
+      number: '',
+    });
+  }
   render() {
+    const { name, number } = this.state;
     return (
       <form className={s.form} onSubmit={this.handleSubmit}>
         <label className={s.title}>
@@ -26,6 +36,8 @@ export default class ContactForm extends Component {
             className={s.input}
             type="text"
             name="name"
+            onChange={this.onChengeValue}
+            value={name}
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
@@ -37,6 +49,8 @@ export default class ContactForm extends Component {
             className={s.input}
             type="tel"
             name="number"
+            onChange={this.onChengeValue}
+            value={number}
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required

@@ -22,7 +22,7 @@ export default class Main extends Component {
   };
   addContact = newContact => {
     const nameInList = this.state.contacts.filter(({ name }) => {
-      return name === newContact.name;
+      return name.toLocaleLowerCase() === newContact.name.toLocaleLowerCase();
     });
     if (nameInList.length) {
       window.alert(`${nameInList[0].name} is alredy in contact`);

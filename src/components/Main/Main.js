@@ -21,11 +21,13 @@ export default class Main extends Component {
     }));
   };
   addContact = newContact => {
-    const nameInList = this.state.contacts.filter(({ name }) => {
-      return name.toLocaleLowerCase() === newContact.name.toLocaleLowerCase();
-    });
-    if (nameInList.length) {
-      window.alert(`${nameInList[0].name} is alredy in contact`);
+    const findinList = this.state.contacts.find(
+      ({ name }) =>
+        newContact.name.toLocaleLowerCase() === name.toLocaleLowerCase(),
+    );
+    if (findinList) {
+      console.log(findinList);
+      alert(`${findinList.name} is alredy in contact`);
       return;
     }
     this.setState(({ contacts }) => ({

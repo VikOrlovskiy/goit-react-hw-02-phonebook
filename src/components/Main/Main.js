@@ -26,7 +26,6 @@ export default class Main extends Component {
         newContact.name.toLocaleLowerCase() === name.toLocaleLowerCase(),
     );
     if (findinList) {
-      console.log(findinList);
       alert(`${findinList.name} is alredy in contact`);
       return;
     }
